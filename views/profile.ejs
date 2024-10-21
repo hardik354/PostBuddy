@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body {
+            background-image: url('https://images.pexels.com/photos/1366957/pexels-photo-1366957.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            animation: fadeIn 1s ease-out;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="w-full min-h-screen bg-zinc-800 bg-opacity-80 text-white p-10">
+        <div class="flex w-full justify-end">
+            <a class="bg-red-700 hover:bg-red-600 transition-colors duration-300 ease-in-out rounded-md px-4 py-2 text-sm mb-1 inline-block"
+                href="/logout">Logout</a>
+        </div>
+        <h2 class="font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">
+            <span class="font-light">HELLO</span>, <%= user.name %>
+        </h2>
+
+        <h4 class="mb-5 mt-10 text-lg">You can create a post</h4>
+        <form action="/post" method="post" class="flex flex-col items-start">
+            <textarea id="postContent" placeholder="What's in your mind!"
+                class="block p-4 outline-none w-2/3 resize-none bg-zinc-700 bg-opacity-60 border-2 border-zinc-600 rounded-md focus:ring-2 focus:ring-blue-400 transition-all duration-300"
+                name="content"></textarea>
+            <input
+                class="px-4 py-2 w-40 bg-blue-900 hover:bg-blue-800 transition-transform transform hover:scale-105 text-sm block rounded-md mt-3 cursor-pointer"
+                type="submit" value="Create new post">
+        </form>
+
+        <div class="posts mt-20">
+            <h3 class="text-zinc-400 text-xl mb-3">Your Posts</h3>
+            <div class="postcontainer mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <% user.posts.reverse().forEach(function(post) { %>
+                    <div class="post p-4 rounded-md bg-zinc-600 border-[1px] border-zinc-700 shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+                        <h4 class="text-blue-400 mb-2">@<%= user.username %></h4>
+                        <p class="text-sm tracking-tight mb-4"><%= post.content %></p>
+                        <small class="mt-3 inline-block"><%= post.likes.length %> Likes </small>
+                        <div class="btns flex gap-4 mt-1">
+                            <a class="text-yellow-500 hover:text-yellow-400 transition-colors" href="/like/<%= post._id %>">
+                                <%= post.likes.indexOf(user._id) === -1 ? "Like"  : "UnLike" %>
+                            </a>
+                            <a class="text-green-500 hover:text-green-400 transition-colors" href="/edit/<%=post._id %>">Edit</a>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
