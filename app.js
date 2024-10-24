@@ -16,6 +16,11 @@ app.get('/', (req, res) => {
   res.render("index");
 });
 
+// multer knowledge
+app.get('/test', (req, res) => {
+  res.render("test");
+});
+
 app.get('/login', (req, res) => {
   res.render("login");
 });
