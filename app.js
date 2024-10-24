@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 });
 
 // multer knowledge
-app.get('/test', (req, res) => {
+app.get("/files", (req, res) => {
   res.render("test");
 });
 
