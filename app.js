@@ -5,6 +5,10 @@ const bcrypt = require('bcrypt');
 const app = express();
 const userModel = require("./models/user");
 const postModel = require("./models/post");
+const multer = require('multer');
+const path = require('path');
+const crypto = require('crypto');
+const { log } = require('console');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -12,8 +16,42 @@ app.use(cookieParser());
 app.set('view engine', 'ejs');
 // app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/images/uploads');
+    },
+    filename: function (req, file, cb) {
+        crypto.randomBytes(16, (err, bytes) => {
+            // console.log(bytes.toString('hex'));
+            const fn = bytes.toString('hex') + path.extname(file.originalname);
+            cb(null,fn);        
+        });
+    }
+  });
+  
+  const upload = multer({ storage: storage })
+
+
 app.get('/', (req, res) => {
   res.render("index");
+});
+
+app.get("/test", (req, res) => {
+  res.render("test");
+});
+
+// upload
+app.post("/upload", upload.single("image"), (req, res) => {
+//   console.log(req.body); 
+// as now your req.body is blank we dont have data in req.body
+//   multer adds two things in req 1is body and 2 is file 
+// the body will contain all the text fields in req.body and file will contain all the file fields in req.file
+console.log(req.file); 
+// here you will get the file object
+
+
 });
 
 app.get('/login', (req, res) => {
