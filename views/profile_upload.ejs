@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Files</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-image: url('https://images.pexels.com/photos/1366957/pexels-photo-1366957.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="w-full min-h-screen bg-black bg-opacity-80 text-white p-10 flex items-center justify-center">
+        <!-- if we want to run or work multer we need enctype -->
+        <form action="/upload"  method ="post" enctype="multipart/form-data" class="space-y-6 bg-zinc-800 bg-opacity-40 p-8 rounded-xl shadow-lg transform transition duration-500 hover:scale-105">
+            <h2 class="text-2xl font-bold text-center mb-4">Upload Profile Picture</h2>
+           <input type="file" name="image"> 
+            <input class="w-full px-4 py-3 bg-blue-500 hover:bg-blue-600 rounded-md cursor-pointer text-white font-bold transition duration-300 transform hover:-translate-y-1 hover:shadow-lg" type="submit" value="Upload">
+        </form> 
+    </div>
+</body>
+</html>
